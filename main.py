@@ -1,23 +1,27 @@
 def add_expressions(*first_args):
     def helper(*second_args):
-        elements = list(first_args) + list(second_args)
+        elements = first_args + second_args
+
+        if not all(isinstance(arg, int) for arg in elements):
+            raise TypeError("not int arg in function")
+
         d = {}
         for el in elements:
             if elements.count(el) > 1:
                 d[el] = el * 2
             else:
                 d[el] = el
-        yield d
+        return d
 
     return helper
 
-result = ""
-for el in add_expressions(1, 2, 8)(2, 3):
-    for key, value in el.items():
-
-        result += f'{value}X**{key} + '
-    result += '0'
-
-print(result)
-
-
+# try:
+#     outcome = add_expressions(1, 2, 8)(2, 4)
+#     result = ""
+#     for key, value in outcome.items():
+#         result += f'{value}X**{key} + '
+#     result += '0'
+#
+#     print(result)
+# except TypeError as e:
+#     print(e)

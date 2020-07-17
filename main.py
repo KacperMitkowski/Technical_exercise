@@ -1,7 +1,3 @@
-from sympy import pretty_print as pp
-from sympy.abc import a, b, n, x
-
-
 def add_expressions(*first_args):
     def helper(*second_args):
         elements = list(first_args) + list(second_args)
@@ -11,13 +7,17 @@ def add_expressions(*first_args):
                 d[el] = el * 2
             else:
                 d[el] = el
-        return d
+        yield d
 
     return helper
 
+result = ""
+for el in add_expressions(1, 2, 8)(2, 3):
+    for key, value in el.items():
 
-outcome = add_expressions(1, 2, 8)(2, 3)
+        result += f'{value}X**{key} + '
+    result += '0'
 
-for key, value in outcome.items():
-    expr = (x) ** key
-    pp(int(value) * expr)
+print(result)
+
+
